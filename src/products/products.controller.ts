@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -27,5 +27,16 @@ export class ProductsController {
   @Get(':id')
   getProduct(@Param('id') prodID: string) {
     return this.productsService.getSingleProduct(prodID);
+  }
+
+  @Patch(':id')
+  updateProduct(
+    @Param('id') prodID: string,
+    @Body('title') title: string,
+    @Body('description') prodDesc: string,
+    @Body('price') prodPrice: number,
+  ) {
+    this.productsService.updateProduct(prodID, title, prodDesc, prodPrice);
+    return null;
   }
 }
